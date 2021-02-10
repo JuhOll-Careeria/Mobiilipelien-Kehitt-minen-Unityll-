@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: "Assets/_Kurssip\xE4iv\xE4t/KolmasKurssip\xE4iv\xE4/Scenes/rewardAdExample.unity"
-    guid: ac93e4e98245d4e468214409d049e8c4
+    path: "Assets/_Kurssip\xE4iv\xE4t/Nelj\xE4sKurssip\xE4iv\xE4/StandardEventsTesti.unity"
+    guid: 71648ac5258b326429287227d134553e
   m_configObjects: {}
