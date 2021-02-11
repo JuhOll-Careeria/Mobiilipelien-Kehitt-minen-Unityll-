@@ -19,6 +19,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    [Header("Mobiilipelien Kehittäminen Unityllä")]
+    public string enemyName = "";
+
     [Header("Parameters")]
     [Tooltip("The Y height at which the enemy will be automatically killed (if it falls off of the level)")]
     public float selfDestructYHeight = -20f;
@@ -348,7 +351,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void OnDie()
+    void OnDie(string deathSource)
     {
         // spawn a particle system when dying
         var vfx = Instantiate(deathVFX, deathVFXSpawnPoint.position, Quaternion.identity);
@@ -361,6 +364,11 @@ public class EnemyController : MonoBehaviour
         if (TryDropItem())
         {
             Instantiate(lootPrefab, transform.position, Quaternion.identity);
+        }
+
+        if (enemyName != "")
+        {
+            AnalyticsManager.Instance.SendEventEnemyDeath(enemyName);
         }
 
         // this will call the OnDestroy function

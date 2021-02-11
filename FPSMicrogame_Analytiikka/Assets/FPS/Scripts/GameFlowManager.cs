@@ -3,6 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class GameFlowManager : MonoBehaviour
 {
+    [Header("Mobiilipelien Kehitys Unityllä")]
+    public LevelEnums currentLevel = LevelEnums.None;
+
     [Header("Parameters")]
     [Tooltip("Duration of the fade-to-black at the end of the game")]
     public float endSceneLoadDelay = 3f;
@@ -40,7 +43,7 @@ public class GameFlowManager : MonoBehaviour
         DebugUtility.HandleErrorIfNullFindObject<PlayerCharacterController, GameFlowManager>(m_Player, this);
 
         m_ObjectiveManager = FindObjectOfType<ObjectiveManager>();
-		DebugUtility.HandleErrorIfNullFindObject<ObjectiveManager, GameFlowManager>(m_ObjectiveManager, this);
+        DebugUtility.HandleErrorIfNullFindObject<ObjectiveManager, GameFlowManager>(m_ObjectiveManager, this);
 
         AudioUtility.SetMasterVolume(1);
     }
@@ -81,9 +84,10 @@ public class GameFlowManager : MonoBehaviour
         // Remember that we need to load the appropriate end scene after a delay
         gameIsEnding = true;
         endGameFadeCanvasGroup.gameObject.SetActive(true);
+
         if (win)
         {
-            m_SceneToLoad = winSceneName;
+            m_SceneToLoad = CheckIfGameFinished();
             m_TimeLoadEndGameScene = Time.time + endSceneLoadDelay + delayBeforeFadeToBlack;
 
             // play a sound on win
@@ -103,8 +107,41 @@ public class GameFlowManager : MonoBehaviour
         }
         else
         {
-            m_SceneToLoad = loseSceneName;
+            if (!currentLevel.Equals(LevelEnums.None))
+            {
+                AnalyticsManager.Instance.SendEventLevelFail(currentLevel.ToString());
+            }
+
+            m_SceneToLoad = LevelEnums.LoseScene.ToString();
             m_TimeLoadEndGameScene = Time.time + endSceneLoadDelay;
         }
+    }
+
+    string CheckIfGameFinished()
+    {
+        if (!currentLevel.Equals(LevelEnums.None))
+        {
+            AnalyticsManager.Instance.SendEventLevelComplete(currentLevel.ToString());
+        }
+
+        switch (currentLevel)
+        {
+            case LevelEnums.None:
+                Debug.LogError("currentLevel parameter is marked as 'LevelEnums.None'");
+                break;
+            case LevelEnums.Level_01:
+
+                // Jos currentLevel - muutuja on yhtäkuin Level_01 niin siirrytään Level_02:seen
+                return LevelEnums.Level_02.ToString();
+            case LevelEnums.Level_02:
+
+                // Jos currentLevel - muutuja on yhtäkuin Level_02 niin siirrytään "Win" Sceneen
+                return LevelEnums.WinScene.ToString();
+            default:
+                break;
+        }
+
+
+        return LevelEnums.IntroMenu.ToString();
     }
 }

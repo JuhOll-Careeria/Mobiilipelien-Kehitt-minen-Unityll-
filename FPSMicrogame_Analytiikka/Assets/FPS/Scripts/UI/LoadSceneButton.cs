@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class LoadSceneButton : MonoBehaviour
 {
-    public string sceneName = "";
+    public LevelEnums level = LevelEnums.None;
 
     private void Update()
     {
@@ -17,6 +17,6 @@ public class LoadSceneButton : MonoBehaviour
 
     public void LoadTargetScene()
     {
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(level.ToString());
     }
 }

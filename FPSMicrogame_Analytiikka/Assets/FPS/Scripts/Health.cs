@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
 
     public UnityAction<float, GameObject> onDamaged;
     public UnityAction<float> onHealed;
-    public UnityAction onDie;
+    public UnityAction<string> onDie;
 
     public float currentHealth { get; set; }
     public bool invincible { get; set; }
@@ -56,7 +56,14 @@ public class Health : MonoBehaviour
             onDamaged.Invoke(trueDamageAmount, damageSource);
         }
 
-        HandleDeath();
+        if (damageSource.GetComponent<EnemyController>())
+        {
+            HandleDeath(damageSource.GetComponent<EnemyController>().enemyName);
+        }
+        else
+        {
+            HandleDeath(damageSource.name);
+        }
     }
 
     public void Kill()
@@ -69,10 +76,10 @@ public class Health : MonoBehaviour
             onDamaged.Invoke(maxHealth, null);
         }
 
-        HandleDeath();
+        HandleDeath("Fall Damage");
     }
 
-    private void HandleDeath()
+    private void HandleDeath(string deathSource)
     {
         if (m_IsDead)
             return;
@@ -83,7 +90,7 @@ public class Health : MonoBehaviour
             if (onDie != null)
             {
                 m_IsDead = true;
-                onDie.Invoke();
+                onDie.Invoke(deathSource);
             }
         }
     }

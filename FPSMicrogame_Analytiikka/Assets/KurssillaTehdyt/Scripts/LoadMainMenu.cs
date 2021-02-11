@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class LoadMainMenu : MonoBehaviour
 {
-    public string mainMenuScene = "IntroMenu";
+    public LevelEnums mainMenuScene = LevelEnums.IntroMenu;
 
     // Start is called before the first frame update
     void Start()
     {
-        SceneManager.LoadScene(mainMenuScene);
+        SceneManager.LoadScene(mainMenuScene.ToString());
     }
 }
