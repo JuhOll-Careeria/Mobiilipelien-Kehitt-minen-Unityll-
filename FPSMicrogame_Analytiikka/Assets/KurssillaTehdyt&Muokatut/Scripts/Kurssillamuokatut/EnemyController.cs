@@ -366,10 +366,12 @@ public class EnemyController : MonoBehaviour
             Instantiate(lootPrefab, transform.position, Quaternion.identity);
         }
 
+        // KURSSILLA TEHDYT
         if (enemyName != "")
         {
             AnalyticsManager.Instance.SendEventEnemyDeath(enemyName);
         }
+        // KURSSILLA TEHDYT
 
         // this will call the OnDestroy function
         Destroy(gameObject, deathDuration);

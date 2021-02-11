@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
 
     public UnityAction<float, GameObject> onDamaged;
     public UnityAction<float> onHealed;
-    public UnityAction<string> onDie;
+    public UnityAction<string> onDie;  // KURSSILLA TEHDYT  = UnityAction --> UnityAction<string>
 
     public float currentHealth { get; set; }
     public bool invincible { get; set; }
@@ -56,6 +56,7 @@ public class Health : MonoBehaviour
             onDamaged.Invoke(trueDamageAmount, damageSource);
         }
 
+        // KURSSILLA TEHDYT
         if (damageSource.GetComponent<EnemyController>())
         {
             HandleDeath(damageSource.GetComponent<EnemyController>().enemyName);
@@ -64,6 +65,7 @@ public class Health : MonoBehaviour
         {
             HandleDeath(damageSource.name);
         }
+        // KURSSILLA TEHDYT
     }
 
     public void Kill()

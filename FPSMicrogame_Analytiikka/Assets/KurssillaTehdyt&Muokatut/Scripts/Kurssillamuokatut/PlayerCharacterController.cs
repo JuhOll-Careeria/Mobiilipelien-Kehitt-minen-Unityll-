@@ -139,7 +139,7 @@ public class PlayerCharacterController : MonoBehaviour
         m_Controller.enableOverlapRecovery = true;
 
         m_Health.onDie += OnDie;
-        m_Health.onDamaged += OnDamaged;
+        m_Health.onDamaged += OnDamaged; // KURSSILLA TEHDYT
 
         // force the crouch state to false when starting
         SetCrouchingState(false, true);
@@ -191,6 +191,7 @@ public class PlayerCharacterController : MonoBehaviour
         HandleCharacterMovement();
     }
 
+    // KURSSILLA TEHDYT
     void OnDamaged(float dmgAmount, GameObject source)
     {
         if (source != null)
@@ -198,11 +199,13 @@ public class PlayerCharacterController : MonoBehaviour
              Debug.Log("Player took " + dmgAmount + " damage from " + source.name, source);
         }
     }
+    // KURSSILLA TEHDYT
 
     void OnDie(string deathSource)
     {
         isDead = true;
 
+        // KURSSILLA TEHDYT
         if (deathSource == "")
         {
             AnalyticsManager.Instance.SendEventPlayerDeath("Unexplained Way");
@@ -211,6 +214,7 @@ public class PlayerCharacterController : MonoBehaviour
         {
             AnalyticsManager.Instance.SendEventPlayerDeath(deathSource);
         }
+        // KURSSILLA TEHDYT
 
         // Tell the weapons manager to switch to a non-existing weapon in order to lower the weapon
         m_WeaponsManager.SwitchToWeaponIndex(-1, true);

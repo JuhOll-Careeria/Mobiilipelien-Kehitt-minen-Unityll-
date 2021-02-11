@@ -3,8 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class GameFlowManager : MonoBehaviour
 {
+    // KURSSILLA TEHDYT
     [Header("Mobiilipelien Kehitys Unityllä")]
     public LevelEnums currentLevel = LevelEnums.None;
+    // KURSSILLA TEHDYT
 
     [Header("Parameters")]
     [Tooltip("Duration of the fade-to-black at the end of the game")]
@@ -87,7 +89,7 @@ public class GameFlowManager : MonoBehaviour
 
         if (win)
         {
-            m_SceneToLoad = CheckIfGameFinished();
+            m_SceneToLoad = CheckIfGameFinished(); // KURSSILLA TEHDYT
             m_TimeLoadEndGameScene = Time.time + endSceneLoadDelay + delayBeforeFadeToBlack;
 
             // play a sound on win
@@ -112,11 +114,12 @@ public class GameFlowManager : MonoBehaviour
                 AnalyticsManager.Instance.SendEventLevelFail(currentLevel.ToString());
             }
 
-            m_SceneToLoad = LevelEnums.LoseScene.ToString();
+            m_SceneToLoad = LevelEnums.LoseScene.ToString(); // KURSSILLA TEHDYT
             m_TimeLoadEndGameScene = Time.time + endSceneLoadDelay;
         }
     }
 
+    // KURSSILLA TEHDYT
     string CheckIfGameFinished()
     {
         if (!currentLevel.Equals(LevelEnums.None))
@@ -144,4 +147,5 @@ public class GameFlowManager : MonoBehaviour
 
         return LevelEnums.IntroMenu.ToString();
     }
+    // KURSSILLA TEHDYT
 }
