@@ -69,7 +69,7 @@ public class Jetpack : MonoBehaviour
         {
             m_CanUseJetpack = false;
         }
-        else if (!m_PlayerCharacterController.hasJumpedThisFrame && m_InputHandler.GetJumpInputDown())
+        else if (!m_PlayerCharacterController.hasJumpedThisFrame && m_InputHandler.GetJumpInputHeld())
         {
             m_CanUseJetpack = true;
         }

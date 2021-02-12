@@ -244,6 +244,7 @@ public class PlayerCharacterController : MonoBehaviour
                     IsNormalUnderSlopeLimit(m_GroundNormal))
                 {
                     isGrounded = true;
+                    m_InputHandler.ToggleJumpBtn(true);
 
                     // handle snapping to the ground
                     if (hit.distance > m_Controller.skinWidth)
@@ -252,6 +253,11 @@ public class PlayerCharacterController : MonoBehaviour
                     }
                 }
             }
+        }
+
+        if (!isGrounded)
+        {
+            m_InputHandler.ToggleJumpBtn(false);
         }
     }
 

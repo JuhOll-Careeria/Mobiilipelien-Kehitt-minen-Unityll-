@@ -1,10 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInputHandler : MonoBehaviour
 {
     [Header("Mobiilipelien Kehittäminen Unityllä")]
     public Joystick leftJoystick;
     public Joystick rightJoystick;
+
+    public Button jumpBtn;
+    public Button jetpackBtn;
+
 
     [Header("FPS-Microgame")]
     [Tooltip("Sensitivity multiplier for moving the camera around")]
@@ -21,6 +27,12 @@ public class PlayerInputHandler : MonoBehaviour
     GameFlowManager m_GameFlowManager;
     PlayerCharacterController m_PlayerCharacterController;
     bool m_FireInputWasHeld;
+
+    // Kurssilla tehdyt
+    bool jumped = false;
+    bool jetpackButtonHeld = false;
+    bool fireButtonHeld = false;
+
 
     private void Start()
     {
@@ -70,9 +82,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     public bool GetJumpInputDown()
     {
-        if (CanProcessInput())
+        if (CanProcessInput() && jumped)
         {
-            return Input.GetButtonDown(GameConstants.k_ButtonNameJump);
+            return true;
         }
 
         return false;
@@ -80,9 +92,10 @@ public class PlayerInputHandler : MonoBehaviour
 
     public bool GetJumpInputHeld()
     {
-        if (CanProcessInput())
+        if (jetpackButtonHeld)
         {
-            return Input.GetButton(GameConstants.k_ButtonNameJump);
+            Debug.Log("Flying with jetpack");
+            return true;
         }
 
         return false;
@@ -100,19 +113,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     public bool GetFireInputHeld()
     {
-        return false;
-
-        if (CanProcessInput())
+        if (CanProcessInput() && fireButtonHeld)
         {
-            bool isGamepad = Input.GetAxis(GameConstants.k_ButtonNameGamepadFire) != 0f;
-            if (isGamepad)
-            {
-                return Input.GetAxis(GameConstants.k_ButtonNameGamepadFire) >= triggerAxisThreshold;
-            }
-            else
-            {
-                return Input.GetButton(GameConstants.k_ButtonNameFire);
-            }
+            return true;
         }
 
         return false;
@@ -224,5 +227,41 @@ public class PlayerInputHandler : MonoBehaviour
         }
 
         return 0f;
+    }
+
+    public void JumpButtonClicked()
+    {
+        jumped = true;
+        StartCoroutine(JumpButtonReset());
+    }
+
+    IEnumerator JumpButtonReset()
+    {
+        yield return new WaitForSeconds(0);
+        jumped = false;
+    }
+
+    public void ToggleJetpack(bool value)
+    {
+        jetpackButtonHeld = value;
+    }
+
+    public void ToggleJumpBtn(bool value)
+    {
+        if (GetComponent<Jetpack>().isJetpackUnlocked)
+        {
+            if (value)
+                jetpackButtonHeld = false;
+
+            jumpBtn.gameObject.SetActive(value);
+            jetpackBtn.gameObject.SetActive(!value);
+        }
+
+        jumpBtn.interactable = value;
+    }
+
+    public void HoldFireButton(bool value)
+    {
+        fireButtonHeld = value;
     }
 }
