@@ -6,6 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: "Assets/_Kurssip\xE4iv\xE4t/Nelj\xE4sKurssip\xE4iv\xE4/StandardEventsTesti.unity"
-    guid: 71648ac5258b326429287227d134553e
-  m_configObjects: {}
+    path: "Assets/_Kurssip\xE4iv\xE4t/Seitsem\xE4sKurssip\xE4iv\xE4/Scenes/AssetBundleTesti.unity"
+    guid: 816488360426ccf44b7d07f2d2061b88
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 47eba8ca0339ec24dbabee53682a7513,
+      type: 2}
